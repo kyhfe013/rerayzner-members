@@ -214,3 +214,8 @@ html:has(dialog[open]){overflow:hidden}
 .month .event-time{font-size:12px;font-weight:600;color:#344f56}
 .month .event-date{width:80px;min-width:80px;font-size:19px;font-weight:700;color:#253f46}
 .month .event-date small{font-size:11px;color:#435c62}
+
+@media(max-width:500px){
+ .modal.with-application{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;padding:12px 4px}
+ .modal.with-application .close{width:44px;height:44px}
+}
