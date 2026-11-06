@@ -196,3 +196,5 @@ html:has(dialog[open]){overflow:hidden}
  .month .event-name{font-size:16px}
  .month .event-time{font-size:14px}
 }
+
+.month .event-date{width:68px;min-width:68px}
