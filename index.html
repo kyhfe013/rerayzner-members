@@ -7,9 +7,9 @@
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="Re.rayznerメンバー会員専用。月間カレンダー、出欠確認、会員概要と規約のご案内。">
 <title>Re.rayzner｜月間カレンダー＆出欠確認</title>
-<link rel="stylesheet" href="style.css?v=20261106-readable3">
+<link rel="stylesheet" href="style.css?v=20261106-forms">
 <script src="events.js?v=20261106-december" defer></script>
-<script src="calendar.js?v=20261106-attendance" defer></script>
+<script src="calendar.js?v=20261106-forms" defer></script>
 <script src="sync.js?v=20261106-sync" defer></script>
 <script src="attendance.js?v=20261106-domain" defer></script>
 </head>
@@ -175,6 +175,6 @@
 <section class="contact-section"><div class="contact-note">休会、コースの移行、退会などについては<br>メンバー専用のライン公式アカウントまで<br>メッセージにて直接、ご一報をお送りください。</div></section>
 </main>
 <footer>Copyright 2024 re.rayzner</footer>
-<dialog class="modal" id="details" aria-labelledby="detail-title"><button class="close" aria-label="詳細を閉じる">×</button><h2 id="detail-title"></h2><p id="detail-date"></p><p id="detail-time"></p><p id="detail-participation">参加用のzoomリンクは<br>Re.rayznerメンバー限定の<br>ライン公式より 直前配信されます！</p><a class="primary" href="#attendance">出欠を回答</a></dialog>
+<dialog class="modal" id="details" aria-labelledby="detail-title"><button class="close" aria-label="詳細を閉じる">×</button><h2 id="detail-title"></h2><p id="detail-date"></p><p id="detail-time"></p><p id="detail-participation">参加用のzoomリンクは<br>Re.rayznerメンバー限定の<br>ライン公式より 直前配信されます！</p><a class="primary" href="#attendance">出欠を回答</a><div id="detail-application" hidden><iframe class="application-frame" id="application-frame" title="参加申し込みフォーム" referrerpolicy="no-referrer"></iframe><a class="application-link" id="application-link" target="_blank" rel="noopener noreferrer">フォームを別のタブで開く</a></div></dialog>
 </body>
 </html>

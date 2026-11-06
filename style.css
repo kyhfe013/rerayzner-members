@@ -198,3 +198,13 @@ html:has(dialog[open]){overflow:hidden}
 }
 
 .month .event-date{width:80px;min-width:80px}
+
+/* 日程一覧は従来の文字サイズに戻し、カレンダー内の強調だけ維持する。 */
+.month .event-name{font-size:14px;font-weight:500}
+.month .event-time{font-size:12px;font-weight:400;color:#4c6268}
+.month .event-date{width:58px;min-width:58px;font-size:19px;font-weight:400;color:#344b50}
+.month .event-date small{font-size:11px}
+@media(max-width:800px){.month .event-date{width:62px;min-width:62px}}
+.modal.with-application{width:min(760px,calc(100% - 24px));max-width:760px;padding:22px;max-height:92dvh;overflow:auto}
+.application-frame{display:block;width:100%;height:65dvh;min-height:350px;border:1px solid #d8e3e8;margin-top:16px;background:white}
+.application-link{display:inline-block;margin-top:12px;color:#187f8d;text-underline-offset:3px}
