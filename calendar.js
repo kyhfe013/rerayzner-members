@@ -131,7 +131,7 @@ function render() {
     const events = schedule.filter(event => event.year === year && event.month === month && (filter === 'all' || event.type === filter));
     const card = element('article', 'month');
     card.setAttribute('aria-label', `${year}年${month + 1}月`);
-    card.innerHTML = `<div class="month-title"><span class="month-number">${String(month + 1).padStart(2, '0')}</span><span class="month-unit">月</span><span class="month-year">${year}</span></div><div class="month-layout"><div class="grid" role="group" aria-label="${month + 1}月の日付と予定"></div><div class="agenda" role="group" aria-label="${month + 1}月の日程一覧"></div></div>`;
+    card.innerHTML = `<div class="month-title"><span class="month-number">${String(month + 1).padStart(2, '0')}</span><span class="month-unit">月</span><span class="month-year">${year}</span></div><div class="month-layout"><div class="agenda" role="group" aria-label="${month + 1}月の日程一覧"></div><div class="grid" role="group" aria-label="${month + 1}月の日付と予定"></div></div>`;
     const grid = card.querySelector('.grid');
     weekdays.forEach((name, index) => grid.append(element('span', `weekday ${index === 0 ? 'sun' : index === 6 ? 'sat' : ''}`, name)));
     const count = new Date(year, month + 1, 0).getDate();
