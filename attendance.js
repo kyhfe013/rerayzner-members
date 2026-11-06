@@ -133,6 +133,10 @@ async function loadAttendance() {
   try {
     if (!attendanceToken) attendanceToken = getAttendanceToken();
     const data = await attendanceRequest({ operation: 'load', token: attendanceToken });
+    if (data.revision > 0) {
+      // 旧URLの変更用リンクから移った場合も、確認できた本人の鍵を新しい端末記録へ保持。
+      try { localStorage.setItem(ATTENDANCE_STORAGE_KEY, attendanceToken); } catch (error) { /* 変更用リンクを継続利用 */ }
+    }
     attendanceData = data;
     attendancePending = null;
     renderAttendance(data);
