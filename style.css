@@ -164,3 +164,35 @@ html:has(dialog[open]){overflow:hidden}
 @keyframes attendance-spin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.attendance-save-bar .primary[aria-busy=true]::before{animation:none}}
 @media(max-width:480px){.attendance-complete{padding:24px 16px}.attendance-receipt h3{font-size:22px}}
+
+/* 元の月間カレンダーの視認性を改善。部活動の追加は行わない。 */
+:root{--share-ink:#124e5b;--practice-ink:#254d2d;--advance-ink:#71304f;--special-ink:#64420c;--pilgrimage-ink:#51306e}
+.month-number{color:#187d8b;font-weight:700}
+.month-year{color:#435c62;font-size:15px;font-weight:600}
+.month-unit{font-size:15px;font-weight:600}
+.period-label{font-weight:700;color:#163238}
+.month .grid{grid-template-rows:34px repeat(6,minmax(112px,auto));gap:3px}
+.month .weekday{font-size:14px;font-weight:700;color:#344f56}
+.month .weekday.sun,.month .day.sun>.date{color:#a63252}
+.month .weekday.sat,.month .day.sat>.date{color:#235e92}
+.month .day{min-height:112px;border-bottom:1px solid #d9e5e8;gap:4px}
+.month .date{font-size:16px;font-weight:700;width:26px;height:26px;color:#253f46}
+.month .today .date{background:#187d8b;color:white}
+.day-event{padding:4px 3px;gap:3px;line-height:1.5}
+.day-event-time{font-size:13px;font-weight:700}
+.day-event-name{font-size:14px;font-weight:700;line-height:1.5}
+.month .event-name{font-size:17px;font-weight:700;color:#173940;line-height:1.6}
+.month .event-time{font-size:15px;font-weight:600;color:#344f56}
+.month .event-date{font-size:21px;font-weight:700;color:#253f46}
+.month .event-date small{font-size:13px;color:#435c62}
+.sync-status{font-size:13px;color:#435c62}
+@media(max-width:500px){
+ .month .grid{grid-template-rows:32px repeat(6,minmax(132px,auto));padding-inline:4px}
+ .month .day{min-height:132px;padding-inline:1px}
+ .month .date{font-size:15px;width:24px;height:24px}
+ .day-event{padding:4px 1px;border-left-width:2px}
+ .day-event-time{font-size:12px}
+ .day-event-name{font-size:13px;line-height:1.5}
+ .month .event-name{font-size:16px}
+ .month .event-time{font-size:14px}
+}
