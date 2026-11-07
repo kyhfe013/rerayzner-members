@@ -27,7 +27,11 @@ function normalizeCalendarEvents(records) {
     if (!type || !timeValid || date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
       throw new Error('取り込んだ予定の日付・種別・時間を確認してください。');
     }
-    return { date: record.date, name: record.name, time: record.time, year, month: month - 1, day, type, ...types[type] };
+    if (!['出欠回答', '別途フォーム', '受付なし'].includes(record.registration) ||
+        (record.registration === '別途フォーム' ? !/^https:\/\/docs\.google\.com\/forms\/d\/e\/[A-Za-z0-9_-]+\/viewform$/.test(record.formUrl || '') : Boolean(record.formUrl))) {
+      throw new Error('予定の受付方法・申込フォームURLを確認してください。');
+    }
+    return { date: record.date, name: record.name, time: record.time, registration: record.registration, formUrl: record.formUrl || '', year, month: month - 1, day, type, ...types[type] };
   }).sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
 }
 let schedule = normalizeCalendarEvents(scheduleSnapshot.events);
@@ -51,12 +55,8 @@ function openDetails(event) {
   document.getElementById('detail-title').textContent = event.name;
   document.getElementById('detail-date').textContent = `${event.year}年${event.month + 1}月${event.day}日（${weekdays[new Date(event.year, event.month, event.day).getDay()]}）`;
   document.getElementById('detail-time').textContent = event.time;
-  document.getElementById('detail-participation').hidden = !['share', 'practice', 'advance'].includes(event.type);
-  const applicationForms = {
-    special: 'https://docs.google.com/forms/d/e/1FAIpQLSe0S_bFdvEE3sUx27NyLGoytQrIkouLc9bi2GyT23T5KnkrqA/viewform',
-    pilgrimage: 'https://docs.google.com/forms/d/e/1FAIpQLSfYTDHHjZH56yWnauPkdWSTT-20OXrLs4ONQE8Z1mwtbvjHhg/viewform'
-  };
-  const formUrl = applicationForms[event.type];
+  document.getElementById('detail-participation').hidden = event.registration !== '出欠回答';
+  const formUrl = event.registration === '別途フォーム' ? event.formUrl : '';
   const dialog = document.getElementById('details');
   dialog.classList.toggle('with-application', Boolean(formUrl));
   document.getElementById('detail-application').hidden = !formUrl;
@@ -68,7 +68,7 @@ function openDetails(event) {
   } else frame.removeAttribute('src');
   const attendanceButton = document.querySelector('#details .primary');
   const monthDistance = (event.year - today.year) * 12 + event.month - today.month;
-  attendanceButton.hidden = Boolean(formUrl) || monthDistance < 0 || monthDistance > 2 || event.date < `${today.year}-${String(today.month + 1).padStart(2, '0')}-${String(today.day).padStart(2, '0')}`;
+  attendanceButton.hidden = event.registration !== '出欠回答' || monthDistance < 0 || monthDistance > 2 || event.date < `${today.year}-${String(today.month + 1).padStart(2, '0')}-${String(today.day).padStart(2, '0')}`;
   document.getElementById('details').showModal();
 }
 
