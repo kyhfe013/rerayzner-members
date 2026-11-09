@@ -37,6 +37,9 @@ function normalizeCalendarEvents(records) {
 let schedule = normalizeCalendarEvents(scheduleSnapshot.events);
 let offset = 0;
 let filter = 'all';
+let scheduleView = 'main';
+let clubSchedule = [];
+let stopClubSync;
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -52,6 +55,10 @@ function setEventColors(node, event) {
 }
 
 function openDetails(event) {
+  if (event.clubId) {
+    location.href = 'clubs/#club-' + encodeURIComponent(event.clubId);
+    return;
+  }
   document.getElementById('detail-title').textContent = event.name;
   document.getElementById('detail-date').textContent = `${event.year}年${event.month + 1}月${event.day}日（${weekdays[new Date(event.year, event.month, event.day).getDay()]}）`;
   document.getElementById('detail-time').textContent = event.time;
@@ -128,7 +135,9 @@ function render() {
     const date = new Date(base.getFullYear(), base.getMonth() + offset + i, 1);
     const year = date.getFullYear();
     const month = date.getMonth();
-    const events = schedule.filter(event => event.year === year && event.month === month && (filter === 'all' || event.type === filter));
+    const activeSchedule = scheduleView === 'clubs' ? clubSchedule : schedule;
+    const events = activeSchedule.filter(event => event.year === year && event.month === month &&
+      (scheduleView === 'clubs' || filter === 'all' || event.type === filter));
     const card = element('article', 'month');
     card.setAttribute('aria-label', `${year}年${month + 1}月`);
     card.innerHTML = `<div class="month-title"><span class="month-number">${String(month + 1).padStart(2, '0')}</span><span class="month-unit">月</span><span class="month-year">${year}</span></div><div class="month-layout"><div class="agenda" role="group" aria-label="${month + 1}月の日程一覧"></div><div class="grid" role="group" aria-label="${month + 1}月の日付と予定"></div></div>`;
@@ -150,6 +159,43 @@ function render() {
     container.append(card);
   }
 }
+
+document.querySelectorAll('[data-schedule-view]').forEach(button => button.addEventListener('click', () => {
+  if (scheduleView === button.dataset.scheduleView) return;
+  scheduleView = button.dataset.scheduleView;
+  const showClubs = scheduleView === 'clubs';
+  document.querySelectorAll('[data-schedule-view]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+  document.querySelector('.filters').hidden = showClubs;
+  document.getElementById('sync-status').hidden = showClubs;
+  const status = document.getElementById('club-sync-status');
+  status.hidden = !showClubs;
+  if (showClubs) {
+    status.textContent = '部活動の予定を確認しています…';
+    stopClubSync = watchClubDirectory(data => {
+      const names = new Map(data.clubs.map(club => [club.id, club.name]));
+      const updated = data.events.map(event => {
+        const [year, month, day] = event.date.split('-').map(Number);
+        return {
+          ...event, year, month: month - 1, day,
+          name: (event.cancelled ? '【中止】' : '') + names.get(event.clubId),
+          color: '#498065', background: '#eef7f1', ink: '#254a38'
+        };
+      });
+      const changed = JSON.stringify(updated) !== JSON.stringify(clubSchedule);
+      clubSchedule = updated;
+      status.textContent = updated.length ? '' : '掲載中の部活動の日程はありません。';
+      if (changed) render();
+    }, () => {
+      clubSchedule = [];
+      status.textContent = '部活動の予定を確認できませんでした。';
+      render();
+    });
+  } else {
+    stopClubSync?.();
+    clubSchedule = [];
+  }
+  render();
+}));
 
 document.getElementById('prev').addEventListener('click', () => { offset -= 3; render(); });
 document.getElementById('next').addEventListener('click', () => { offset += 3; render(); });

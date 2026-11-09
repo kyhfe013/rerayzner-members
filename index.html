@@ -7,9 +7,10 @@
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="Re.rayznerメンバー会員専用。月間カレンダー、出欠確認、会員概要と規約のご案内。">
 <title>Re.rayzner｜月間カレンダー＆出欠確認</title>
-<link rel="stylesheet" href="style.css?v=20261107-list-first">
+<link rel="stylesheet" href="style.css?v=20261109-clubs">
 <script src="events.js?v=20261106-december" defer></script>
-<script src="calendar.js?v=20261107-list-first" defer></script>
+<script src="club-data.js?v=20261109" defer></script>
+<script src="calendar.js?v=20261109-clubs" defer></script>
 <script src="sync.js?v=20261106-sync" defer></script>
 <script src="attendance.js?v=20261106-domain" defer></script>
 </head>
@@ -25,6 +26,12 @@
 <div class="top-attendance content"><a class="primary primary-large" href="#attendance">まとめて出欠を回答</a></div>
 <div class="calendar-section content">
 <section id="calendar" aria-label="3か月のイベントカレンダー">
+<nav class="club-switch" aria-label="予定の種類">
+  <button class="filter" type="button" data-schedule-view="main" aria-pressed="true">メイン予定</button>
+  <button class="filter" type="button" data-schedule-view="clubs" aria-pressed="false">部活動</button>
+  <a href="clubs/">部活動の紹介を見る</a>
+</nav>
+<p id="club-sync-status" class="club-status" role="status" hidden></p>
 <div class="toolbar"><div class="period"><span class="period-label" id="period" aria-live="polite"></span><button class="arrow" id="prev" aria-label="前の3か月">‹</button><button class="reset" id="reset" aria-label="今月に戻る">↺</button><button class="arrow" id="next" aria-label="次の3か月">›</button></div><div class="filters" aria-label="イベントの絞り込み"><button class="filter" data-filter="all" aria-label="すべての予定を表示" aria-pressed="true">全て</button><button class="filter" data-filter="share" aria-pressed="false"><span class="dot" style="--event-color:var(--share)"></span>シェア会</button><button class="filter" data-filter="practice" aria-pressed="false"><span class="dot" style="--event-color:var(--practice)"></span>実践会</button><button class="filter" data-filter="advance" aria-pressed="false"><span class="dot" style="--event-color:var(--advance)"></span>アドバンスコース</button><button class="filter" data-filter="special" aria-pressed="false"><span class="dot" style="--event-color:var(--special)"></span>特別講座</button><button class="filter" data-filter="pilgrimage" aria-pressed="false"><span class="dot" style="--event-color:var(--pilgrimage)"></span>霊格アップお詣り</button></div></div>
 <p id="sync-status" class="sync-status" role="status" aria-live="polite" data-state="loading">予定を確認しています…</p>
 <div class="calendars" id="calendars"></div>
