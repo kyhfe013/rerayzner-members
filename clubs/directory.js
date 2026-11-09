@@ -1,6 +1,5 @@
 const clubStatus = document.getElementById('club-directory-status');
 const clubUpcoming = document.getElementById('club-upcoming');
-const clubLinks = document.getElementById('club-links');
 const clubCards = document.getElementById('club-cards');
 let lastDirectory;
 const clubToday = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Tokyo' });
@@ -25,7 +24,6 @@ watchClubDirectory(data => {
   const firstRender = lastDirectory === undefined;
   lastDirectory = snapshot;
   clubUpcoming.replaceChildren();
-  clubLinks.replaceChildren();
   clubCards.replaceChildren();
   const upcoming = data.events.filter(event => !event.cancelled && event.date >= today);
   const names = new Map(data.clubs.map(club => [club.id, club.name]));
@@ -41,9 +39,6 @@ watchClubDirectory(data => {
   data.clubs.forEach(club => {
     const card = document.createElement('article');
     card.id = 'club-' + club.id;
-    const link = clubElement('a', club.name);
-    link.href = '#' + card.id;
-    clubLinks.append(link);
     card.append(clubElement('h3', club.name));
     card.append(
       clubElement('h4', '紹介文'),
@@ -64,6 +59,5 @@ watchClubDirectory(data => {
   lastDirectory = undefined;
   clubStatus.textContent = '部活動の予定を確認できませんでした。';
   clubUpcoming.replaceChildren();
-  clubLinks.replaceChildren();
   clubCards.replaceChildren();
 });
