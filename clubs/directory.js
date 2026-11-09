@@ -40,6 +40,14 @@ watchClubDirectory(data => {
     const card = document.createElement('article');
     card.id = 'club-' + club.id;
     card.append(clubElement('h3', club.name));
+    const officers = document.createElement('dl');
+    officers.className = 'club-officers';
+    for (const [label, name] of [['部長', club.leader], ['副部長', club.deputy]]) {
+      const officer = document.createElement('div');
+      officer.append(clubElement('dt', label), clubElement('dd', name || '準備中'));
+      officers.append(officer);
+    }
+    card.append(officers);
     card.append(
       clubElement('h4', '紹介文'),
       clubElement('p', club.intro || '準備中です。'),
