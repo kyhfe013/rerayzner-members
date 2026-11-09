@@ -1,0 +1,206 @@
+.club-directory-page {
+  background: #f3f8f8;
+  color: #183039;
+}
+
+.club-directory {
+  width: min(1000px, calc(100% - 40px));
+  padding-block: 24px 56px;
+  font-size: 16px;
+}
+
+.club-back a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.club-heading {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 12px 0 24px;
+  padding: clamp(24px, 5vw, 52px);
+  border: 0;
+  border-radius: 22px;
+  background: linear-gradient(115deg, #103b48 28%, #17505c 72%, #1b6b72);
+  color: #fff;
+}
+
+.club-heading::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 48%;
+  background:
+    radial-gradient(circle at 88% 18%, #72d4c445 0 15%, transparent 15.5%),
+    radial-gradient(circle at 77% 78%, #76d9db2d 0 28%, transparent 28.5%),
+    radial-gradient(circle at 60% 38%, #f2d99b32 0 12%, transparent 12.5%);
+}
+
+.club-brand {
+  color: #b8f0ea;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.club-heading h1 {
+  margin: 6px 0 12px;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.18;
+  letter-spacing: .06em;
+}
+
+.club-heading p {
+  max-width: 32em;
+  line-height: 1.75;
+}
+
+.club-next-section {
+  padding: 16px 20px;
+  background: #e4f0f2;
+  border-left: 4px solid #347f87;
+  border-radius: 8px 14px 14px 8px;
+}
+
+.club-next-section h2 {
+  margin: 0 0 3px;
+  font-size: 16px;
+}
+
+.club-next-section [role="status"] {
+  color: #3f5b62;
+  font-size: 14px;
+}
+
+.club-next-section [role="status"]:empty,
+.club-upcoming:empty {
+  display: none;
+}
+
+.club-upcoming {
+  margin: 8px 0 0;
+}
+
+.club-upcoming a {
+  font-weight: 700;
+}
+
+.club-jump {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 20px;
+}
+
+.club-jump a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 48px;
+  padding: 9px 12px;
+  border: 1px solid #b9d3d7;
+  border-radius: 10px;
+  background: #fff;
+  color: #234a54;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.club-jump a::after {
+  content: "↓";
+  color: #377480;
+  flex: none;
+}
+
+.club-jump a:hover {
+  background: #e5f3f3;
+  border-color: #57939d;
+}
+
+.club-cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.club-cards article {
+  --club-accent: #287d70;
+  --club-tint: #e9f6f1;
+  min-width: 0;
+  padding: 20px 22px;
+  border: 1px solid #cddfe1;
+  border-top: 4px solid var(--club-accent);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 5px 16px #173d4310;
+}
+
+#club-SHUKYAKU { --club-accent: #386e9b; --club-tint: #e9f2fa; }
+#club-KIRAKIRA { --club-accent: #9a4b6d; --club-tint: #faedf3; }
+#club-MIRAI { --club-accent: #876216; --club-tint: #fcf4e1; }
+
+.club-cards article:target {
+  outline: 2px solid var(--club-accent);
+  outline-offset: 3px;
+  background: #fff;
+}
+
+.club-cards h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: clamp(19px, 2.4vw, 24px);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.club-cards h3::before {
+  content: "";
+  flex: 0 0 32px;
+  height: 32px;
+  border: 8px solid var(--club-tint);
+  border-radius: 50%;
+  background: var(--club-accent);
+  box-sizing: border-box;
+}
+
+.club-cards h4 {
+  margin: 14px 0 4px;
+  color: #3a555d;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.club-cards p {
+  margin-bottom: 8px;
+  color: #334b53;
+  line-height: 1.7;
+}
+
+.club-cards h4:first-of-type + p {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--club-tint);
+  color: #203943;
+  font-weight: 700;
+}
+
+.club-cards article > :last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  .club-directory { width: calc(100% - 28px); padding-top: 14px; }
+  .club-heading { border-radius: 16px; }
+  .club-jump { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .club-cards { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .club-cards article { padding: 16px; }
+}
