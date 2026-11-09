@@ -54,11 +54,19 @@ watchClubDirectory(data => {
       clubElement('h4', '開催日程'),
       clubElement('p', club.regularSchedule || '準備中です。')
     );
-    const next = upcoming.find(event => event.clubId === club.id);
-    const nextDate = clubElement('p', next ? clubEventLabel(next) : '掲載中の日程はありません。');
-    nextDate.className = 'club-card-next';
-    card.append(clubElement('h4', '次回の日程'), nextDate);
-    if (next?.note) card.append(clubElement('p', next.note));
+    const nextDates = upcoming.filter(event => event.clubId === club.id).slice(0, 3);
+    card.append(clubElement('h4', '今後の日程'));
+    if (!nextDates.length) {
+      const empty = clubElement('p', '掲載中の日程はありません。');
+      empty.className = 'club-card-next';
+      card.append(empty);
+    }
+    for (const event of nextDates) {
+      const date = clubElement('p', clubEventLabel(event));
+      date.className = 'club-card-next';
+      card.append(date);
+      if (event.note) card.append(clubElement('p', event.note));
+    }
     clubCards.append(card);
   });
   if (!data.clubs.length) clubCards.append(clubElement('p', '掲載中の部活動はありません。'));
