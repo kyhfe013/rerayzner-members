@@ -45,18 +45,17 @@ watchClubDirectory(data => {
     link.href = '#' + card.id;
     clubLinks.append(link);
     card.append(clubElement('h3', club.name));
-    if (club.intro) card.append(clubElement('p', club.intro));
+    card.append(
+      clubElement('h4', '紹介文'),
+      clubElement('p', club.intro || '準備中です。'),
+      clubElement('h4', '開催日程'),
+      clubElement('p', club.regularSchedule || '準備中です。')
+    );
     const next = upcoming.find(event => event.clubId === club.id);
-    card.append(clubElement('h4', '次回の日程'), clubElement('p', next ? clubEventLabel(next) : '掲載中の日程はありません。'));
+    const nextDate = clubElement('p', next ? clubEventLabel(next) : '掲載中の日程はありません。');
+    nextDate.className = 'club-card-next';
+    card.append(clubElement('h4', '次回の日程'), nextDate);
     if (next?.note) card.append(clubElement('p', next.note));
-    if (club.participation) {
-      const line = clubElement('a', 'LINE公式を開く');
-      line.className = 'club-line-link';
-      line.href = 'https://line.me/R/ti/p/@328vqpyy';
-      line.target = '_blank';
-      line.rel = 'noopener noreferrer';
-      card.append(clubElement('h4', '参加方法'), clubElement('p', club.participation), line);
-    }
     clubCards.append(card);
   });
   if (!data.clubs.length) clubCards.append(clubElement('p', '掲載中の部活動はありません。'));
