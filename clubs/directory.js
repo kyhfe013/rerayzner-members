@@ -49,7 +49,14 @@ watchClubDirectory(data => {
     const next = upcoming.find(event => event.clubId === club.id);
     card.append(clubElement('h4', '次回の日程'), clubElement('p', next ? clubEventLabel(next) : '掲載中の日程はありません。'));
     if (next?.note) card.append(clubElement('p', next.note));
-    if (club.participation) card.append(clubElement('h4', '参加方法'), clubElement('p', club.participation));
+    if (club.participation) {
+      const line = clubElement('a', 'LINE公式を開く');
+      line.className = 'club-line-link';
+      line.href = 'https://line.me/R/ti/p/@328vqpyy';
+      line.target = '_blank';
+      line.rel = 'noopener noreferrer';
+      card.append(clubElement('h4', '参加方法'), clubElement('p', club.participation), line);
+    }
     clubCards.append(card);
   });
   if (!data.clubs.length) clubCards.append(clubElement('p', '掲載中の部活動はありません。'));

@@ -204,3 +204,20 @@
   .club-cards { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .club-cards article { padding: 16px; }
 }
+
+.club-directory .club-line-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #11684c;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.club-directory .club-line-link:hover {
+  background: #0a523a;
+}
