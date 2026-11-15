@@ -54,7 +54,9 @@ watchClubDirectory(data => {
       clubElement('h4', '開催日程'),
       clubElement('p', club.regularSchedule || '準備中です。')
     );
-    const nextDates = upcoming.filter(event => event.clubId === club.id).slice(0, 3);
+    const [year, month] = today.split('-').map(Number);
+    const end = new Date(Date.UTC(year, month + 5, 1)).toISOString().slice(0, 10);
+    const nextDates = upcoming.filter(event => event.clubId === club.id && event.date < end);
     card.append(clubElement('h4', '今後の日程'));
     if (!nextDates.length) {
       const empty = clubElement('p', '掲載中の日程はありません。');
