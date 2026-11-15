@@ -70,7 +70,7 @@ async function attendanceRequest(input) {
         !Number.isInteger(data.revision) || typeof data.answers !== 'object' || !data.answers || !/^[a-f0-9]{64}$/.test(data.stamp)) {
       throw new Error('回答の取得内容を確認できませんでした。もう一度操作してください。');
     }
-    normalizeCalendarEvents(data.events);
+    normalizeCalendarEvents(data.events.map(event => ({ ...event, registration: '出欠回答' })));
     const ids = new Set();
     data.events.forEach(event => {
       if (!/^[A-Za-z0-9_-]{1,80}$/.test(event.id) || ids.has(event.id)) throw new Error('予定を確認できませんでした。再読み込みしてください。');
