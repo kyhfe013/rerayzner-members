@@ -228,7 +228,7 @@ function openAttendance() {
 document.querySelectorAll('a[href="#attendance"]').forEach(link => {
   link.addEventListener('click', event => { event.preventDefault(); openAttendance(); });
 });
-document.querySelector('.attendance-close').addEventListener('click', () => attendanceDialog.close());
+document.querySelector('#attendance .attendance-close').addEventListener('click', () => attendanceDialog.close());
 document.getElementById('attendance-done').addEventListener('click', () => attendanceDialog.close());
 document.getElementById('attendance-review-close').addEventListener('click', () => attendanceDialog.close());
 document.getElementById('attendance-review').addEventListener('click', () => {
