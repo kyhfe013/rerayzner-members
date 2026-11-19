@@ -256,7 +256,7 @@ html:has(dialog[open]){overflow:hidden}
 #roster-table thead th { position:sticky; top:0; background:#e5f4f6; z-index:2; }
 #roster-table th:first-child { position:sticky; left:0; background:#f0f8f9; z-index:1; min-width:130px; }
 #roster-table thead th:first-child { z-index:3; }
-#roster-table .roster-self th, #roster-table .roster-self td { background:#fff4d6; }
+#roster-table th.roster-self, #roster-table td.roster-self { background:#fff4d6; }
 #roster-table td[data-status="参加"] { color:#05605d; font-weight:700; }
 #roster-table td[data-status="未回答"] { color:#68757b; }
 
