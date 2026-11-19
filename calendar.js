@@ -68,6 +68,7 @@ function openDetails(event) {
   const dialog = document.getElementById('details');
   dialog.classList.toggle('with-application', Boolean(formUrl));
   document.getElementById('detail-application').hidden = !formUrl;
+  document.getElementById('application-link').textContent = '申し込む（フォームを別のタブで開く）';
   const frame = document.getElementById('application-frame');
   if (formUrl) {
     frame.title = event.name + ' 参加申し込みフォーム';
