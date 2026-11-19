@@ -259,3 +259,10 @@ html:has(dialog[open]){overflow:hidden}
 #roster-table .roster-self th, #roster-table .roster-self td { background:#fff4d6; }
 #roster-table td[data-status="参加"] { color:#05605d; font-weight:700; }
 #roster-table td[data-status="未回答"] { color:#68757b; }
+
+#roster-table td[data-status] { font-size:28px; font-weight:700; line-height:1.3; }
+#roster-table td[data-status="参加"], .roster-legend [data-status="参加"] { color:#05605d; }
+#roster-table td[data-status="不参加"], .roster-legend [data-status="不参加"] { color:#37474f; }
+#roster-table td[data-status="未定"], .roster-legend [data-status="未定"] { color:#a85b00; }
+#roster-table td[data-status="未回答"], .roster-legend [data-status="未回答"] { color:#7b858b; }
+.roster-legend { font-size:14px; font-weight:700; }

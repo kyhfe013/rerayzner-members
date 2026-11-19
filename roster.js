@@ -39,7 +39,10 @@ function renderRoster() {
     row.append(name);
     events.forEach(event => {
       const status = person.answers[event.id] || '未回答';
-      const cell = element('td', '', status);
+      const symbols = { '参加': '○', '不参加': '×', '未定': '△', '未回答': '―' };
+      const cell = element('td', '', symbols[status] || '―');
+      cell.setAttribute('aria-label', status);
+      cell.title = status;
       cell.dataset.status = status;
       row.append(cell);
     });

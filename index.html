@@ -7,13 +7,13 @@
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="Re.rayznerメンバー会員専用。月間カレンダー、出欠確認、会員概要と規約のご案内。">
 <title>Re.rayzner｜スケジュール・参加申込</title>
-<link rel="stylesheet" href="style.css?v=20261119-roster">
+<link rel="stylesheet" href="style.css?v=20261119-symbols">
 <script src="events.js?v=20261119-theme-snapshot" defer></script>
 <script src="club-data.js?v=20261109" defer></script>
 <script src="calendar.js?v=20261119-actions" defer></script>
 <script src="sync.js?v=20261106-sync" defer></script>
 <script src="attendance.js?v=20261115-attendance-fix" defer></script>
-<script src="roster.js?v=20261119" defer></script>
+<script src="roster.js?v=20261119-symbols" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#calendar">カレンダーへ移動</a>
@@ -45,6 +45,7 @@
 <label for="roster-filter">表示する予定</label> <select id="roster-filter"><option value="">すべて</option></select>
 <button class="attendance-secondary" id="roster-reload" type="button">最新の一覧に更新</button>
 <button class="attendance-secondary" id="roster-answer" type="button">自分の出欠を回答・編集</button>
+<p class="roster-legend"><span data-status="参加">○ 参加</span>　<span data-status="不参加">× 不参加</span>　<span data-status="未定">△ 未定</span>　<span data-status="未回答">― 未回答</span></p>
 <div class="roster-scroll" tabindex="0" aria-label="出欠一覧。横にスクロールできます"><table id="roster-table"></table></div></div></dialog>
 <dialog class="attendance-modal" id="attendance" aria-labelledby="attendance-title">
 <header class="attendance-modal-header"><h2 id="attendance-title">出欠連絡</h2><button type="button" class="attendance-close" aria-label="出欠一覧を閉じる">×</button></header>
