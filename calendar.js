@@ -31,7 +31,7 @@ function normalizeCalendarEvents(records) {
         (record.registration === '別途フォーム' ? !/^https:\/\/docs\.google\.com\/forms\/d\/e\/[A-Za-z0-9_-]+\/viewform$/.test(record.formUrl || '') : Boolean(record.formUrl))) {
       throw new Error('予定の受付方法・申込フォームURLを確認してください。');
     }
-    return { date: record.date, name: record.name, time: record.time, registration: record.registration, formUrl: record.formUrl || '', year, month: month - 1, day, type, ...types[type] };
+    return { date: record.date, name: record.name, time: record.time, registration: record.registration, formUrl: record.formUrl || '', year, month: month - 1, day, type, ...types[type], theme: typeof record.theme === 'string' && record.name === '特別講座' ? record.theme : '' };
   }).sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
 }
 let schedule = normalizeCalendarEvents(scheduleSnapshot.events);
@@ -59,7 +59,7 @@ function openDetails(event) {
     location.href = 'clubs/#club-' + encodeURIComponent(event.clubId);
     return;
   }
-  document.getElementById('detail-title').textContent = event.name;
+  document.getElementById('detail-title').textContent = (event.theme ? event.name + '「' + event.theme + '」' : event.name);
   document.getElementById('detail-date').textContent = `${event.year}年${event.month + 1}月${event.day}日（${weekdays[new Date(event.year, event.month, event.day).getDay()]}）`;
   document.getElementById('detail-time').textContent = event.time;
   document.getElementById('detail-participation').hidden = event.registration !== '出欠回答';
@@ -101,7 +101,7 @@ function dayCell(year, month, day, weekday, events) {
     setEventColors(label, event);
     label.setAttribute('aria-label', `${month + 1}月${day}日 ${event.name} ${event.time}`);
     const start = event.time.match(/^\d{1,2}:\d{2}/)?.[0] || event.time;
-    label.append(element('span', 'day-event-time', start), element('span', 'day-event-name', event.name));
+    label.append(element('span', 'day-event-time', start), element('span', 'day-event-name', event.theme || event.name));
     label.addEventListener('click', () => openDetails(event));
     cell.append(label);
   }
@@ -115,7 +115,7 @@ function agendaRow(event) {
   const date = element('span', 'event-date', `${event.month + 1}/${event.day}`);
   date.append(element('small', '', `（${weekdays[new Date(event.year, event.month, event.day).getDay()]}）`));
   const copy = element('span', 'event-copy');
-  copy.append(element('span', 'event-name', event.name), element('span', 'event-time', event.time));
+  copy.append(element('span', 'event-name', event.theme ? event.name + '「' + event.theme + '」' : event.name), element('span', 'event-time', event.time));
   const arrow = element('span', 'chevron', '›');
   arrow.setAttribute('aria-hidden', 'true');
   row.append(date, copy, arrow);
