@@ -102,7 +102,7 @@ function dayCell(year, month, day, weekday, events) {
     setEventColors(label, event);
     label.setAttribute('aria-label', `${month + 1}月${day}日 ${event.name} ${event.time}`);
     const start = event.time.match(/^\d{1,2}:\d{2}/)?.[0] || event.time;
-    label.append(element('span', 'day-event-time', start), element('span', 'day-event-name', event.theme || event.name));
+    label.append(element('span', 'day-event-time', start), element('span', 'day-event-name', event.name));
     label.addEventListener('click', () => openDetails(event));
     cell.append(label);
   }
