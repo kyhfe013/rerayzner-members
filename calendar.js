@@ -62,6 +62,7 @@ function openDetails(event) {
   document.getElementById('detail-title').textContent = (event.theme ? event.name + '「' + event.theme + '」' : event.name);
   document.getElementById('detail-date').textContent = `${event.year}年${event.month + 1}月${event.day}日（${weekdays[new Date(event.year, event.month, event.day).getDay()]}）`;
   document.getElementById('detail-time').textContent = event.time;
+  document.getElementById('detail-advance-join').hidden = event.name !== 'アドバンスコース';
   document.getElementById('detail-participation').hidden = event.registration !== '出欠回答';
   const formUrl = event.registration === '別途フォーム' ? event.formUrl : '';
   const dialog = document.getElementById('details');
