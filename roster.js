@@ -16,30 +16,31 @@ function renderRoster() {
   table.replaceChildren();
   const head = document.createElement('thead');
   const header = document.createElement('tr');
-  header.append(element('th', '', '日程・予定'), element('th', '', '参加人数'));
+  header.append(element('th', '', 'お名前'));
+  events.forEach(event => header.append(element('th', '', event.date.replaceAll('-', '/') + '\n' + event.name + '\n' + event.time)));
+  head.append(header);
+  table.append(head);
+  const body = document.createElement('tbody');
+  const counts = document.createElement('tr');
+  counts.append(element('th', '', '参加人数'));
+  events.forEach(event => counts.append(element('td', '', String(rosterData.roster.filter(person => person.answers[event.id] === '参加').length))));
+  body.append(counts);
   rosterData.roster.forEach(person => {
-    const name = element('th', person.self ? 'roster-self' : '', person.name + (person.self ? '（自分）' : ''));
-    name.scope = 'col';
+    const row = document.createElement('tr');
+    if (person.self) row.className = 'roster-self';
+    const name = element('th', '', person.name + (person.self ? '（自分）' : ''));
+    name.scope = 'row';
     if (person.self) {
       const edit = element('button', 'attendance-text-button', '編集');
       edit.type = 'button';
       edit.addEventListener('click', editRosterAnswer);
       name.append(document.createElement('br'), edit);
     }
-    header.append(name);
-  });
-  head.append(header);
-  table.append(head);
-  const body = document.createElement('tbody');
-  events.forEach(event => {
-    const row = document.createElement('tr');
-    const label = element('th', '', event.date.replaceAll('-', '/') + '\n' + event.name + '\n' + event.time);
-    label.scope = 'row';
-    row.append(label, element('td', '', String(rosterData.roster.filter(person => person.answers[event.id] === '参加').length)));
-    rosterData.roster.forEach(person => {
+    row.append(name);
+    events.forEach(event => {
       const status = person.answers[event.id] || '未回答';
       const symbols = { '参加': '○', '不参加': '×', '未定': '△', '未回答': '―' };
-      const cell = element('td', person.self ? 'roster-self' : '', symbols[status] || '―');
+      const cell = element('td', '', symbols[status] || '―');
       cell.setAttribute('aria-label', status);
       cell.title = status;
       cell.dataset.status = status;
@@ -71,7 +72,7 @@ async function loadRoster() {
       rosterFilter.append(option);
     });
     renderRoster();
-    rosterStatus.textContent = data.roster.length ? 'ご自身の名前の下の「編集」から回答を変更できます。' : 'まだ回答がありません。「自分の出欠を回答・編集」から入力できます。';
+    rosterStatus.textContent = data.roster.length ? 'ご自身の行の「編集」から回答を変更できます。' : 'まだ回答がありません。「自分の出欠を回答・編集」から入力できます。';
   } catch (error) {
     document.getElementById('roster-table').replaceChildren();
     rosterStatus.textContent = error.message;
