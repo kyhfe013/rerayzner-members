@@ -270,3 +270,6 @@ html:has(dialog[open]){overflow:hidden}
 .month .event-ended .event-name, .month .event-ended .event-time,
 .month .event-ended .event-date, .month .event-ended .event-date small,
 .month .event-ended .chevron { color:#737d82; }
+
+.roster-name-link { color:inherit; text-decoration:underline; text-underline-offset:4px; }
+.roster-name-link:focus-visible { outline:2px solid var(--teal); outline-offset:4px; }

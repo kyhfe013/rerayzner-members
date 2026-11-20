@@ -28,13 +28,19 @@ function renderRoster() {
   rosterData.roster.forEach(person => {
     const row = document.createElement('tr');
     if (person.self) row.className = 'roster-self';
-    const name = element('th', '', person.name + (person.self ? '（自分）' : ''));
+    const name = element('th', '', '');
     name.scope = 'row';
     if (person.self) {
-      const edit = element('button', 'attendance-text-button', '編集');
-      edit.type = 'button';
-      edit.addEventListener('click', editRosterAnswer);
-      name.append(document.createElement('br'), edit);
+      const link = element('a', 'roster-name-link', person.name + '（自分）');
+      link.href = '#attendance';
+      link.setAttribute('aria-label', person.name + 'の出欠を編集');
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        editRosterAnswer();
+      });
+      name.append(link);
+    } else {
+      name.textContent = person.name;
     }
     row.append(name);
     events.forEach(event => {
@@ -72,7 +78,7 @@ async function loadRoster() {
       rosterFilter.append(option);
     });
     renderRoster();
-    rosterStatus.textContent = data.roster.length ? 'ご自身の行の「編集」から回答を変更できます。' : 'まだ回答がありません。「自分の出欠を回答・編集」から入力できます。';
+    rosterStatus.textContent = data.roster.length ? 'ご自身の名前を押すと回答を変更できます。' : 'まだ回答がありません。「自分の出欠を回答・編集」から入力できます。';
   } catch (error) {
     document.getElementById('roster-table').replaceChildren();
     rosterStatus.textContent = error.message;
