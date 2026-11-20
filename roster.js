@@ -17,7 +17,7 @@ function renderRoster() {
   const head = document.createElement('thead');
   const header = document.createElement('tr');
   header.append(element('th', '', 'お名前'));
-  events.forEach(event => header.append(element('th', '', event.date.replaceAll('-', '/') + '\n' + event.name + '\n' + event.time)));
+  events.forEach(event => header.append(element('th', '', event.date.slice(5).replace('-', '/') + '\n' + event.name + '\n' + event.time)));
   head.append(header);
   table.append(head);
   const body = document.createElement('tbody');
