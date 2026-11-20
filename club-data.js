@@ -28,8 +28,11 @@ function requestClubDirectory() {
 function watchClubDirectory(onData, onError) {
   let running = false;
   let stopped = false;
+  let lastAttempt = 0;
+  const interval = 24 * 60 * 60 * 1000;
   const refresh = async () => {
     if (running || stopped || document.hidden) return;
+    lastAttempt = Date.now();
     running = true;
     try {
       const data = await requestClubDirectory();
@@ -44,11 +47,12 @@ function watchClubDirectory(onData, onError) {
     }
   };
   refresh();
-  const timer = setInterval(refresh, 60000);
-  document.addEventListener('visibilitychange', refresh);
+  const timer = setInterval(refresh, interval);
+  const onVisible = () => { if (Date.now() - lastAttempt >= interval) refresh(); };
+  document.addEventListener('visibilitychange', onVisible);
   return () => {
     stopped = true;
     clearInterval(timer);
-    document.removeEventListener('visibilitychange', refresh);
+    document.removeEventListener('visibilitychange', onVisible);
   };
 }

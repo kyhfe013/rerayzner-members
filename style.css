@@ -273,3 +273,5 @@ html:has(dialog[open]){overflow:hidden}
 
 .roster-name-link { color:inherit; text-decoration:underline; text-underline-offset:4px; }
 .roster-name-link:focus-visible { outline:2px solid var(--teal); outline-offset:4px; }
+
+.club-switch .sync-status{margin:0 0 0 auto;text-align:right}

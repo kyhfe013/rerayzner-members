@@ -1,6 +1,6 @@
 // 公開用の3項目だけを返す既存GASへ接続。認証情報はブラウザへ渡さない。
 const MEMBER_CALENDAR_ENDPOINT = 'https://script.google.com/macros/s/AKfycbydPN7D-_6ejeo20NOd9P6gtiMTyZKAEcXBAQZuTmyafP9zUbfNggn8xVGynz5ssxSJ/exec';
-const MEMBER_CALENDAR_INTERVAL = 60000;
+const MEMBER_CALENDAR_INTERVAL = 24 * 60 * 60 * 1000;
 let calendarRequestSequence = 0;
 let calendarRequestRunning = false;
 let calendarLastAttempt = 0;
@@ -44,7 +44,7 @@ async function syncMemberCalendar() {
     const fetchedAt = new Date(payload.fetchedAt);
     status.textContent = '自動更新：' + new Intl.DateTimeFormat('ja-JP', {
       timeZone: 'Asia/Tokyo', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
-    }).format(fetchedAt) + '（1分ごとに確認）';
+    }).format(fetchedAt);
     status.dataset.state = 'live';
     status.dataset.fetchedAt = payload.fetchedAt;
   } catch (error) {
