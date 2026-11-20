@@ -48,7 +48,22 @@ function element(tag, className, text) {
   return node;
 }
 
+function eventHasEnded(event, now = new Date()) {
+  const end = event.time.match(/[〜～~\-–—]\s*(\d{1,2}):(\d{2})$/);
+  if (end) {
+    return now.getTime() >= Date.parse(event.date + 'T' + end[1].padStart(2, '0') + ':' + end[2] + ':00+09:00');
+  }
+  return event.date < new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Tokyo' }).format(now);
+}
+
 function setEventColors(node, event) {
+  if (eventHasEnded(event)) {
+    node.classList.add('event-ended');
+    node.style.setProperty('--event-color', '#b7bec2');
+    node.style.setProperty('--event-bg', '#edf0f1');
+    node.style.setProperty('--event-ink', '#737d82');
+    return;
+  }
   node.style.setProperty('--event-color', event.color);
   node.style.setProperty('--event-bg', event.background);
   node.style.setProperty('--event-ink', event.ink);
@@ -95,7 +110,7 @@ function dayCell(year, month, day, weekday, events) {
   cell.append(number);
   if (events.length) {
     cell.classList.add('event');
-    setEventColors(cell, events[0]);
+    setEventColors(cell, events.find(event => !eventHasEnded(event)) || events[0]);
   }
   for (const event of events) {
     const label = element('button', 'day-event');

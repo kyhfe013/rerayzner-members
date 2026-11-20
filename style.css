@@ -266,3 +266,7 @@ html:has(dialog[open]){overflow:hidden}
 #roster-table td[data-status="未定"], .roster-legend [data-status="未定"] { color:#a85b00; }
 #roster-table td[data-status="未回答"], .roster-legend [data-status="未回答"] { color:#7b858b; }
 .roster-legend { font-size:14px; font-weight:700; }
+
+.month .event-ended .event-name, .month .event-ended .event-time,
+.month .event-ended .event-date, .month .event-ended .event-date small,
+.month .event-ended .chevron { color:#737d82; }

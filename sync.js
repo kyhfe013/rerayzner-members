@@ -39,9 +39,8 @@ async function syncMemberCalendar() {
     }
     // 全件を検証してから差し替える。不正な応答で最後の正常な予定を消さない。
     const updated = normalizeCalendarEvents(payload.events);
-    const changed = JSON.stringify(updated) !== JSON.stringify(schedule);
     schedule = updated;
-    if (changed) render();
+    render();
     const fetchedAt = new Date(payload.fetchedAt);
     status.textContent = '自動更新：' + new Intl.DateTimeFormat('ja-JP', {
       timeZone: 'Asia/Tokyo', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
