@@ -3,6 +3,7 @@ const rosterStatus = document.getElementById('roster-status');
 const rosterFilter = document.getElementById('roster-filter');
 let rosterData = null;
 let rosterLoading = false;
+let rosterSelectedEvent = null;
 
 function editRosterAnswer() {
   rosterDialog.close();
@@ -11,7 +12,7 @@ function editRosterAnswer() {
 }
 
 function renderRoster() {
-  const events = rosterData.events.filter(event => !rosterFilter.value || event.date.slice(0, 7) === rosterFilter.value || event.name === rosterFilter.value);
+  const events = rosterData.events.filter(event => (rosterSelectedEvent && rosterFilter.value === 'selected-event' && event.date === rosterSelectedEvent.date && event.name === rosterSelectedEvent.name && event.time === rosterSelectedEvent.time) || !rosterFilter.value || event.date.slice(0, 7) === rosterFilter.value || event.name === rosterFilter.value);
   const table = document.getElementById('roster-table');
   table.replaceChildren();
   const head = document.createElement('thead');
@@ -77,6 +78,12 @@ async function loadRoster() {
       option.value = value;
       rosterFilter.append(option);
     });
+    if (rosterSelectedEvent) {
+      const option = element('option', '', rosterSelectedEvent.date.slice(5).replace('-', '/') + ' ' + rosterSelectedEvent.name);
+      option.value = 'selected-event';
+      rosterFilter.append(option);
+      rosterFilter.value = 'selected-event';
+    }
     renderRoster();
     rosterStatus.textContent = data.roster.length ? 'ご自身の名前を押すと回答を変更できます。' : 'まだ回答がありません。「自分の出欠を回答・編集」から入力できます。';
   } catch (error) {
@@ -87,10 +94,12 @@ async function loadRoster() {
     document.getElementById('roster-reload').disabled = false;
   }
 }
-document.getElementById('attendance-roster-open').addEventListener('click', () => {
+function openRoster(event = null) {
+  rosterSelectedEvent = event;
   rosterDialog.showModal();
   loadRoster();
-});
+}
+document.getElementById('attendance-roster-open').addEventListener('click', () => openRoster());
 document.getElementById('roster-close').addEventListener('click', () => rosterDialog.close());
 document.getElementById('roster-answer').addEventListener('click', editRosterAnswer);
 document.getElementById('roster-reload').addEventListener('click', loadRoster);

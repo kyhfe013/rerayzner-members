@@ -93,6 +93,9 @@ function openDetails(event) {
   const attendanceButton = document.querySelector('#details .primary');
   const monthDistance = (event.year - today.year) * 12 + event.month - today.month;
   attendanceButton.hidden = event.registration !== '出欠回答' || monthDistance < 0 || monthDistance > 2 || event.date < `${today.year}-${String(today.month + 1).padStart(2, '0')}-${String(today.day).padStart(2, '0')}`;
+  const rosterButton = document.getElementById('detail-roster-open');
+  rosterButton.hidden = attendanceButton.hidden;
+  rosterButton.onclick = () => { dialog.close(); openRoster(event); };
   document.getElementById('details').showModal();
 }
 

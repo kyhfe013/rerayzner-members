@@ -275,3 +275,5 @@ html:has(dialog[open]){overflow:hidden}
 .roster-name-link:focus-visible { outline:2px solid var(--teal); outline-offset:4px; }
 
 .club-switch .sync-status{margin:0 0 0 auto;text-align:right}
+
+#detail-roster-open{max-width:none;margin-top:12px}
